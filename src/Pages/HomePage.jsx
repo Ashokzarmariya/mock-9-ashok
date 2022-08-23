@@ -35,7 +35,7 @@ const HomePage = () => {
 
   const handleSubmit = () => {
     console.log(content);
-    dispatch(newpost({ gif, content }));
+    dispatch(newpost({ gif, content,username: store.auth.reqUser.name}));
     setGif("");
   };
   return (
@@ -94,7 +94,7 @@ const HomePage = () => {
                 alt=""
                
                   />
-                  <h3>{store.auth.reqUser.name}</h3>
+                  <h3>{item.username}</h3>
                 </div>
                 <p>{item.content}</p>
                 <img src={item.gif} width={400} height={250} alt="" />
