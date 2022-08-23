@@ -5,7 +5,7 @@ import { reqUser } from "../Redux/Authentication/Action";
 import { useNavigate } from "react-router-dom";
 import AddPost from "../Components/AddPost";
 import { Button } from "@mui/material";
-import { getallpost, newpost } from "../Redux/Post/Action";
+import { getallpost, getgif, newpost } from "../Redux/Post/Action";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,8 @@ const HomePage = () => {
   const store = useSelector((store) => store);
   const [content, setContent] = useState("");
   const [posts, setPosts] = useState(null);
-  const [isVisible, setIsVisible] = useState();
+ const [isVisible, setIsVisible] = useState();
+ const [gif, setGif] = useState();
 
   console.log("store home", posts);
 
@@ -34,7 +35,7 @@ const HomePage = () => {
 
   const handleSubmit = () => {
     console.log(content);
-    dispatch(newpost(content));
+    dispatch(newpost({gif,content}));
   };
   return (
     <div className="main">
@@ -68,7 +69,9 @@ const HomePage = () => {
               type="text"
               placeholder="write your message..."
             />
-            <div className="gifBox"></div>
+       <div className="gifBox">
+        <img src={gif} alt="" />
+            </div>
           </div>
 
           <div>
@@ -86,7 +89,7 @@ const HomePage = () => {
               <div className="postCard">
                 <p>{item.content}</p>
                 <img
-                  src="https://cdn.pixabay.com/photo/2017/07/10/23/45/cubes-2492010__340.jpg"
+                  src={item.gif}
                   width={400}
                   height={250}
                   alt=""
@@ -96,16 +99,29 @@ const HomePage = () => {
         </div>
 
         <div className={`${isVisible ? "gifvisible" : "gifnone"} gifDiv`}>
-          <input type="text" placeholder="search" onChange={() => {}} />
+      <input type="text" placeholder="search" onChange={(e) => {
+
+       dispatch(getgif(e.target.value))
+       console.log(store.post)
+          }} />
 
       <div>
-       
-            <img
-              src="https://cdn.pixabay.com/photo/2020/02/03/00/12/fiber-4814456__340.jpg"
+       {store.post.gif?.data && store.post.gif.data.slice(0,10).map((item) => {
+        return <> <img
+         onClick={() => {
+          setGif(item.images.original.url)
+          setIsVisible(false)
+         }}
+              src={item.images.original.url}
               alt=""
               width={400}
               height={250}
             />
+        </>
+        
+       })}
+       
+           
           </div>
         </div>
       </div>

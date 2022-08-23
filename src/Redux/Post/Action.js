@@ -6,7 +6,7 @@ export const newpost = (data) => async (dispatch) => {
   headers: {
    "Content-Type":"application/json"
   },
-  body:JSON.stringify({content:data})
+  body:JSON.stringify(data)
  })
  const post =await res.json();
  console.log("newpost", post)
@@ -25,5 +25,6 @@ console.log("all post",posts)
 export const getgif = (q) => async (dispatch) => {
  const res = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=kvsah4vEScW2FikzeethaaCr7T5imVVW&q=${q}`) 
  const data = await res.json();
+ console.log("data gif",data)
  dispatch({type:GET_GIF, payload:data})
 }
