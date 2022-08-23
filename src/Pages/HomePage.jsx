@@ -14,8 +14,8 @@ const HomePage = () => {
   const store = useSelector((store) => store);
   const [content, setContent] = useState("");
   const [posts, setPosts] = useState(null);
- const [isVisible, setIsVisible] = useState();
- const [gif, setGif] = useState();
+  const [isVisible, setIsVisible] = useState();
+  const [gif, setGif] = useState();
 
   console.log("store home", posts);
 
@@ -35,8 +35,8 @@ const HomePage = () => {
 
   const handleSubmit = () => {
     console.log(content);
-   dispatch(newpost({ gif, content }));
-   setGif("")
+    dispatch(newpost({ gif, content }));
+    setGif("");
   };
   return (
     <div className="main">
@@ -70,8 +70,8 @@ const HomePage = () => {
               type="text"
               placeholder="write your message..."
             />
-       <div className="gifBox">
-        <img src={gif} alt="" />
+            <div className="gifBox">
+              <img src={gif} alt="" />
             </div>
           </div>
 
@@ -88,41 +88,49 @@ const HomePage = () => {
           {posts &&
             posts.map((item) => (
               <div className="postCard">
+                <div className="userDetailCard">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652__340.png"
+                alt=""
+               
+                  />
+                  <h3>{store.auth.reqUser.name}</h3>
+                </div>
                 <p>{item.content}</p>
-                <img
-                  src={item.gif}
-                  width={400}
-                  height={250}
-                  alt=""
-                />
+                <img src={item.gif} width={400} height={250} alt="" />
               </div>
             ))}
         </div>
 
         <div className={`${isVisible ? "gifvisible" : "gifnone"} gifDiv`}>
-      <input type="text" placeholder="search" onChange={(e) => {
+          <input
+            type="text"
+            placeholder="search"
+            onChange={(e) => {
+              dispatch(getgif(e.target.value));
+              console.log(store.post);
+            }}
+          />
 
-       dispatch(getgif(e.target.value))
-       console.log(store.post)
-          }} />
-
-      <div>
-       {store.post.gif?.data && store.post.gif.data.slice(0,10).map((item) => {
-        return <> <img
-         onClick={() => {
-          setGif(item.images.original.url)
-          setIsVisible(false)
-         }}
-              src={item.images.original.url}
-              alt=""
-              width={400}
-              height={250}
-            />
-        </>
-        
-       })}
-       
-           
+          <div>
+            {store.post.gif?.data &&
+              store.post.gif.data.slice(0, 10).map((item) => {
+                return (
+                  <>
+                    {" "}
+                    <img
+                      onClick={() => {
+                        setGif(item.images.original.url);
+                        setIsVisible(false);
+                      }}
+                      src={item.images.original.url}
+                      alt=""
+                      width={400}
+                      height={250}
+                    />
+                  </>
+                );
+              })}
           </div>
         </div>
       </div>
