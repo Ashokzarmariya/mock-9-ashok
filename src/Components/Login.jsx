@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login, signup } from "../Redux/Authentication/Action";
 
 const Login = () => {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
+ const dispatch = useDispatch();
+ const store = useSelector((store) => store);
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+ 
+ 
+ //redirect home page if login
+ useEffect(() => {
+  console.log(store)
+  if (store.auth.isLogin) {
+   navigate("/")
+  }
+ },[store.auth])
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -16,7 +30,8 @@ const Login = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("data", userData);
+   console.log("data", userData);
+   dispatch(login(userData))
   };
   return (
     <div className="container">

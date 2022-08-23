@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
+import { useDispatch } from "react-redux";
+import { signup } from "../Redux/Authentication/Action";
 
 const Signup = () => {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
+ const dispatch = useDispatch();
+
   const [userData, setUserData] = useState({
     email: "",
     name: "",
@@ -14,11 +18,16 @@ const Signup = () => {
   const handleChange = (e) => {
     let { name, value } = e.target;
     setUserData((values) => ({ ...values, [name]: value }));
-  };
+ };
+ 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("data", userData);
-  };
+   console.log("data", userData);
+   dispatch(signup(userData));
+   navigate("/login")
+ };
+ 
   return (
     <div className="container">
       <div className="mainDiv">
