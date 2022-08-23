@@ -103,6 +103,8 @@
   align-items: center;
   width: 60%;
   padding: 1rem 3rem;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 .gifDiv>div{
  margin-top: 1rem;

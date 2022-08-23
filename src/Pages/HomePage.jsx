@@ -116,7 +116,7 @@ const HomePage = () => {
             {store.post.gif?.data &&
               store.post.gif.data.slice(0, 10).map((item) => {
                 return (
-                  <>
+                  <div>
                     {" "}
                     <img
                       onClick={() => {
@@ -125,10 +125,10 @@ const HomePage = () => {
                       }}
                       src={item.images.original.url}
                       alt=""
-                      width={400}
-                      height={250}
+                      width={200}
+                      height={200}
                     />
-                  </>
+                  </div>
                 );
               })}
           </div>
