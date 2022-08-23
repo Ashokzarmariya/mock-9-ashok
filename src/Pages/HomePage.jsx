@@ -35,7 +35,8 @@ const HomePage = () => {
 
   const handleSubmit = () => {
     console.log(content);
-    dispatch(newpost({gif,content}));
+   dispatch(newpost({ gif, content }));
+   setGif("")
   };
   return (
     <div className="main">
